@@ -1,24 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import WineComponent from "./components/wine/WineComponent"
+import WhiskyComponent from "./components/whisky/WhiskyComponent"
+import EtcComponent from './components/etc/EtcComponent';
+
 
 function App() {
+
+
+  const [selectedType, setSelectedType] = useState<string>("wine") //wine, whisky, etc
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <>
+      
+      <button onClick={(e)=>{
+        e.preventDefault();
+        if (selectedType !== "wine"){
+          setSelectedType("wine")
+        }
+      }}>
+        {selectedType === "wine" && (<strong>Wine</strong>)}
+        {selectedType !== "wine" && (<>Wine</>)}
+      </button>{" "}
+      <button onClick={(e)=>{
+        e.preventDefault();
+        if (selectedType !== "whisky"){
+          setSelectedType("whisky")
+        }
+      }}>
+        {selectedType === "whisky" && (<strong>Whisky</strong>)}
+        {selectedType !== "whisky" && (<>Whisky</>)}
+      </button>{" "}
+      <button onClick={(e)=>{
+        e.preventDefault();
+        if (selectedType !== "etc"){
+          setSelectedType("etc")
+        }
+      }}>
+        {selectedType === "etc" && (<strong>ETC</strong>)}
+        {selectedType !== "etc" && (<>ETC</>)}
+      </button>{" "}
+      </>
+      
+      <br/>
+      
+      <div style={{
+        }}>
+        {selectedType === "wine" && (<WineComponent/>)}
+        {selectedType === "whisky" && (<WhiskyComponent/>)}
+        {selectedType === "etc" && (<EtcComponent/>)}
+      </div>
+
     </div>
   );
 }

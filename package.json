@@ -2,6 +2,7 @@
   "name": "make-liquor-label",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://boxergom.github.io/make-liquor-label",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -11,6 +12,9 @@
     "@types/node": "^16.7.13",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "gh-pages": "^6.3.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-scripts": "5.0.1",
@@ -21,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.7"
   }
 }

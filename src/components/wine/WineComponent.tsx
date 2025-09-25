@@ -23,7 +23,7 @@ const WineComponent = () => {
     
     const getWineBlockPosition = (index: number) => {
         const colStarts = [2, 9, 16, 23]; // B, I, P, W
-        const blockWidth = 6;   // G-B+1
+        const blockWidth = 6;   // G-B+10
         const blockHeight = 8;  // 행 높이
 
         const rowSpacing = 9;   // 8행 + 1행 간격
@@ -101,8 +101,44 @@ const WineComponent = () => {
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet("와인 라벨");
 
-        sheet.getRow(1).height = 5;
-        sheet.getColumn(1).width = 1;
+        sheet.getRow(1).height = 2.2;
+
+        sheet.getColumn(1).width = 2.2;
+
+        sheet.getColumn(2).width = 0.41;
+        sheet.getColumn(3).width = 14;
+        sheet.getColumn(4).width = 7;
+        sheet.getColumn(5).width = 7.5;
+        sheet.getColumn(6).width = 5;
+        sheet.getColumn(7).width = 0.41;
+
+        sheet.getColumn(8).width = 2.2;
+
+        sheet.getColumn(9).width = 0.41;
+        sheet.getColumn(10).width = 14;
+        sheet.getColumn(11).width = 7;
+        sheet.getColumn(12).width = 7.5;
+        sheet.getColumn(13).width = 5;
+        sheet.getColumn(14).width = 0.41;
+
+        sheet.getColumn(15).width = 2.2;
+
+        sheet.getColumn(16).width = 0.41;
+        sheet.getColumn(17).width = 14;
+        sheet.getColumn(18).width = 7;
+        sheet.getColumn(19).width = 7.5;
+        sheet.getColumn(20).width = 5;
+        sheet.getColumn(21).width = 0.41;
+
+        sheet.getColumn(22).width = 2.2;
+
+        sheet.getColumn(23).width = 0.41;
+        sheet.getColumn(24).width = 14;
+        sheet.getColumn(25).width = 7;
+        sheet.getColumn(26).width = 7.5;
+        sheet.getColumn(27).width = 5;
+        sheet.getColumn(28).width = 0.41;
+
 
 
         let flags: Array<{startRow: number, startCol: number, nation: string}> = []
@@ -117,49 +153,73 @@ const WineComponent = () => {
                 for (let c = startCol; c <= endCol; c++) {
                     const cell = sheet.getCell(r, c);
 
-                    if (r === startRow) cell.border = { ...cell.border, top: { style: "thin" } };
-                    if (r === endRow) cell.border = { ...cell.border, bottom: { style: "thin" } };
-                    if (c === startCol) cell.border = { ...cell.border, left: { style: "thin" } };
-                    if (c === endCol) cell.border = { ...cell.border, right: { style: "thin" } };
+                    if (r === startRow) cell.border = { ...cell.border, top: { style: "medium" } };
+                    if (r === endRow) cell.border = { ...cell.border, bottom: { style: "medium" } };
+                    if (c === startCol) cell.border = { ...cell.border, left: { style: "medium" } };
+                    if (c === endCol) cell.border = { ...cell.border, right: { style: "medium" } };
                 }
             }
 
+            if (idx % 4 === 0){
+
+                sheet.getRow(startRow).height = 5;
+                sheet.getRow(startRow + 1).height = 50;
+                sheet.getRow(startRow + 2).height = 15;
+                sheet.getRow(startRow + 3).height = 15;
+                sheet.getRow(startRow + 4).height = 5;
+                sheet.getRow(startRow + 5).height = 17.4;
+                sheet.getRow(startRow + 6).height = 23.4;
+                sheet.getRow(startRow + 7).height = 5;
+
+            }
+
             // C3~E4 대신 상대 위치
-            sheet.mergeCells(startRow + 1, startCol + 1, startRow + 2, startCol + 3);
+            sheet.mergeCells(startRow + 1, startCol + 1, startRow + 1, startCol + 3);
+
             const nameCell = sheet.getCell(startRow + 1, startCol + 1);
             nameCell.value = wine.name;
-            nameCell.alignment = { horizontal: "left", vertical: "middle" };
-            nameCell.font = { bold: true, size: 19 };
+            nameCell.alignment = { wrapText: true, horizontal: "left", vertical: "middle" };
+            nameCell.font = {bold: true, size: 19 };
 
             // 국가 > 지역
-            sheet.mergeCells(startRow + 3, startCol + 1, startRow + 3, startCol + 3);
-            sheet.getCell(startRow + 3, startCol + 1).value = `${wine.nation} > ${wine.region}`;
+            sheet.mergeCells(startRow + 2, startCol + 1, startRow + 2, startCol + 2);
+            const regionCell = sheet.getCell(startRow + 2, startCol + 1);
+            if (wine.region){
+                regionCell.value = `${wine.nation} > ${wine.region}`;
+            }else{
+                regionCell.value = `${wine.nation}`;
+            }
+            regionCell.font = { size: 8 };
+
 
             // category
-            sheet.mergeCells(startRow + 4, startCol + 1, startRow + 4, startCol + 3);
-            sheet.getCell(startRow + 4, startCol + 1).value = wine.category;
+            sheet.mergeCells(startRow + 3, startCol + 1, startRow + 3, startCol + 3);
+            const categoryCell = sheet.getCell(startRow + 3, startCol + 1);
+            categoryCell.value = wine.category;
+            categoryCell.font = { size: 8 };
 
             // volume
-            sheet.getCell(startRow + 4, startCol + 4).value = `${wine.volume}ml`;
+            const volumeCell = sheet.getCell(startRow + 3, startCol + 4);
+            volumeCell.value = `${wine.volume}ml`;
+            volumeCell.font = { size: 8 };
 
             // 정상가
-
-            sheet.mergeCells(startRow + 5, startCol + 1, startRow + 5, startCol + 2);
-            const normalPriceTitleCell = sheet.getCell(startRow + 5, startCol + 2);
+            const normalPriceTitleCell = sheet.getCell(startRow + 5, startCol + 1);
             normalPriceTitleCell.value = "정상가";
+            normalPriceTitleCell.font = { size: 8 };
             normalPriceTitleCell.alignment = { vertical: "middle", horizontal: "center" };
 
+            const normalPriceCell = sheet.getCell(startRow + 6, startCol + 1);
 
-            sheet.mergeCells(startRow + 6, startCol + 1, startRow + 6, startCol + 2);
-            const normalPriceCell = sheet.getCell(startRow + 6, startCol + 2);
-            normalPriceCell.value = `${wine.normalPrice}원`;
-            normalPriceCell.font = { strike: true, };
+            normalPriceCell.value = `${wine.normalPrice.toLocaleString()}원`;
+            normalPriceCell.font = { strike: true, size: 12, bold: true};
             normalPriceCell.alignment = { vertical: "middle", horizontal: "center" };
 
             // nowPrice
-            sheet.mergeCells(startRow + 5, startCol + 3, startRow + 6, startCol + 4);
-            const nowPriceCell = sheet.getCell(startRow + 5, startCol + 3);
-            nowPriceCell.value = `${wine.nowPrice}원`;
+            sheet.mergeCells(startRow + 5, startCol + 2, startRow + 6, startCol + 4);
+            const nowPriceCell = sheet.getCell(startRow + 5, startCol + 2);
+
+            nowPriceCell.value = `${wine.nowPrice.toLocaleString()}원`;
             nowPriceCell.alignment = { vertical: "middle", horizontal: "center" };
             nowPriceCell.font = { bold: true, size: 18, color: { argb: "FF0000" } };
 
@@ -171,13 +231,30 @@ const WineComponent = () => {
 
             let fileName = ""
             
-            if(flag.nation === '이탈리아'){
-                fileName = "italy"
-            }else if(flag.nation === '프랑스'){
-                fileName = "france"
+            if(flag.nation === '프랑스'){
+                fileName = "fr"
+            }else if(flag.nation === '이탈리아'){
+                fileName = "it"
+            }else if(flag.nation === '독일'){
+                fileName = "dc"
+            }else if(flag.nation === '칠레'){
+                fileName = "ch"
+            }else if(flag.nation === '호주'){
+                fileName = "aus"
+            }else if(flag.nation === '스페인'){
+                fileName = "dc"
+            }else if(flag.nation === '포르투갈'){
+                fileName = "pg"
+            }else if(flag.nation === '미국'){
+                fileName = "us"
+            }else if(flag.nation === '뉴질랜드'){
+                fileName = "nz"
+            }else if(flag.nation === '남아프리카공화국'){
+                fileName = "sa"
+            }else if(flag.nation === '아르헨티나'){
+                fileName = "ag"
             }
-
-            const response = await fetch(process.env.PUBLIC_URL + `/imgs/${fileName}.jpeg`);
+            const response = await fetch(process.env.PUBLIC_URL + `/imgs/${fileName}.png`);
             const blob = await response.blob();
             const arrayBuffer = await blob.arrayBuffer();
 
@@ -185,12 +262,12 @@ const WineComponent = () => {
 
             const imageId = workbook.addImage({
                 buffer: arrayBuffer,
-                extension: "jpeg",
+                extension: "png",
             })
 
             sheet.addImage(imageId, {
-                tl: { col: flags[i].startCol + 3, row: flags[i].startRow },
-                ext: { width: 74, height: 96 }, // px 단위 크기 지정
+                tl: { col: flags[i].startCol + 3, row: flags[i].startRow  },
+                ext: { width: 42, height: 82 }, // px 단위 크기 지정
                 editAs: "absolute"
             });
         }
@@ -223,9 +300,23 @@ const WineComponent = () => {
 
         <button onClick={downloadTemplate}>템플릿 다운로드</button><br/>
 
-        now wine datas : {datas.length}
-        <br/>
-        <button onClick={handleExport}>엑셀로 내보내기</button>
+        <button onClick={handleExport}>엑셀로 내보내기</button><br/>
+
+ name,
+                    nation,
+                    region,
+                    category,
+                    volume: Number(volume),
+                    normalPrice: Number(normalPrice),
+                    nowPrice: Number(nowPrice),
+        <div>now wine datas : {datas.length}<br/>
+        <strong>이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>
+        {datas.map((wine, index)=>{
+            return (<div key={index}>
+
+                {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
+        })}
+        </div>
     </>
 }
 

@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/make-liquor-label/static/js/main.229c1762.js",
+    "main.js": "/make-liquor-label/static/js/main.08e48387.js",
     "static/js/453.db0e395c.chunk.js": "/make-liquor-label/static/js/453.db0e395c.chunk.js",
     "index.html": "/make-liquor-label/index.html",
-    "main.229c1762.js.map": "/make-liquor-label/static/js/main.229c1762.js.map",
+    "main.08e48387.js.map": "/make-liquor-label/static/js/main.08e48387.js.map",
     "453.db0e395c.chunk.js.map": "/make-liquor-label/static/js/453.db0e395c.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.229c1762.js"
+    "static/js/main.08e48387.js"
   ]
 }

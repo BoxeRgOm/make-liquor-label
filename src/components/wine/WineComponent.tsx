@@ -302,13 +302,6 @@ const WineComponent = () => {
 
         <button onClick={handleExport}>엑셀로 내보내기</button><br/>
 
- name,
-                    nation,
-                    region,
-                    category,
-                    volume: Number(volume),
-                    normalPrice: Number(normalPrice),
-                    nowPrice: Number(nowPrice),
         <div>now wine datas : {datas.length}<br/>
         <strong>이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>
         {datas.map((wine, index)=>{

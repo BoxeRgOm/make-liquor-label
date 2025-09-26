@@ -96,6 +96,31 @@ const WineComponent = () => {
         reader.readAsArrayBuffer(file);
     };
 
+    const [widthColumns, setWidthColumns] = useState({
+        space : 2.2,
+        colums0 : 0.41,
+        colums1 : 14,
+        colums2 : 7,
+        colums3 : 7.5,
+        colums4 : 5,
+        colums5 : 0.41,
+    })
+
+    const [heightRows, setHeightRows] = useState({
+        row0: 5,
+        row1: 50,
+        row2: 15,
+        row3: 15,
+        row4: 5,
+        row5: 17.4,
+        row6: 23.4,
+        row7: 5,
+    })
+
+    const [sizeFlag, setSizeFlag] = useState({
+         width: 42, height: 80 
+        })
+
     const handleExport = async () => {
 
         const workbook = new ExcelJS.Workbook();
@@ -103,41 +128,41 @@ const WineComponent = () => {
 
         sheet.getRow(1).height = 2.2;
 
-        sheet.getColumn(1).width = 2.2;
+        sheet.getColumn(1).width = widthColumns.space;
 
-        sheet.getColumn(2).width = 0.41;
-        sheet.getColumn(3).width = 14;
-        sheet.getColumn(4).width = 7;
-        sheet.getColumn(5).width = 7.5;
-        sheet.getColumn(6).width = 5;
-        sheet.getColumn(7).width = 0.41;
+        sheet.getColumn(2).width = widthColumns.colums0;
+        sheet.getColumn(3).width = widthColumns.colums1;
+        sheet.getColumn(4).width = widthColumns.colums2;
+        sheet.getColumn(5).width = widthColumns.colums3;
+        sheet.getColumn(6).width = widthColumns.colums4;
+        sheet.getColumn(7).width = widthColumns.colums5;
 
-        sheet.getColumn(8).width = 2.2;
+        sheet.getColumn(8).width = widthColumns.space;
 
-        sheet.getColumn(9).width = 0.41;
-        sheet.getColumn(10).width = 14;
-        sheet.getColumn(11).width = 7;
-        sheet.getColumn(12).width = 7.5;
-        sheet.getColumn(13).width = 5;
-        sheet.getColumn(14).width = 0.41;
+        sheet.getColumn(9).width = widthColumns.colums0;
+        sheet.getColumn(10).width = widthColumns.colums1;
+        sheet.getColumn(11).width = widthColumns.colums2;
+        sheet.getColumn(12).width = widthColumns.colums3;
+        sheet.getColumn(13).width = widthColumns.colums4;
+        sheet.getColumn(14).width = widthColumns.colums5;
 
-        sheet.getColumn(15).width = 2.2;
+        sheet.getColumn(15).width = widthColumns.space;
 
-        sheet.getColumn(16).width = 0.41;
-        sheet.getColumn(17).width = 14;
-        sheet.getColumn(18).width = 7;
-        sheet.getColumn(19).width = 7.5;
-        sheet.getColumn(20).width = 5;
-        sheet.getColumn(21).width = 0.41;
+        sheet.getColumn(16).width = widthColumns.colums0;
+        sheet.getColumn(17).width = widthColumns.colums1;
+        sheet.getColumn(18).width = widthColumns.colums2;
+        sheet.getColumn(19).width = widthColumns.colums3;
+        sheet.getColumn(20).width = widthColumns.colums4;
+        sheet.getColumn(21).width = widthColumns.colums5;
 
-        sheet.getColumn(22).width = 2.2;
+        sheet.getColumn(22).width = widthColumns.space;
 
-        sheet.getColumn(23).width = 0.41;
-        sheet.getColumn(24).width = 14;
-        sheet.getColumn(25).width = 7;
-        sheet.getColumn(26).width = 7.5;
-        sheet.getColumn(27).width = 5;
-        sheet.getColumn(28).width = 0.41;
+        sheet.getColumn(23).width = widthColumns.colums0;
+        sheet.getColumn(24).width = widthColumns.colums1;
+        sheet.getColumn(25).width = widthColumns.colums2;
+        sheet.getColumn(26).width = widthColumns.colums3;
+        sheet.getColumn(27).width = widthColumns.colums4;
+        sheet.getColumn(28).width = widthColumns.colums5;
 
 
 
@@ -162,14 +187,14 @@ const WineComponent = () => {
 
             if (idx % 4 === 0){
 
-                sheet.getRow(startRow).height = 5;
-                sheet.getRow(startRow + 1).height = 50;
-                sheet.getRow(startRow + 2).height = 15;
-                sheet.getRow(startRow + 3).height = 15;
-                sheet.getRow(startRow + 4).height = 5;
-                sheet.getRow(startRow + 5).height = 17.4;
-                sheet.getRow(startRow + 6).height = 23.4;
-                sheet.getRow(startRow + 7).height = 5;
+                sheet.getRow(startRow).height = heightRows.row0;
+                sheet.getRow(startRow + 1).height = heightRows.row1;
+                sheet.getRow(startRow + 2).height = heightRows.row2;
+                sheet.getRow(startRow + 3).height = heightRows.row3;
+                sheet.getRow(startRow + 4).height = heightRows.row4;
+                sheet.getRow(startRow + 5).height = heightRows.row5;
+                sheet.getRow(startRow + 6).height = heightRows.row6;
+                sheet.getRow(startRow + 7).height = heightRows.row7;
 
             }
 
@@ -267,7 +292,7 @@ const WineComponent = () => {
 
             sheet.addImage(imageId, {
                 tl: { col: flags[i].startCol + 3, row: flags[i].startRow  },
-                ext: { width: 42, height: 82 }, // px 단위 크기 지정
+                ext: sizeFlag, // px 단위 크기 지정
                 editAs: "absolute"
             });
         }
@@ -301,6 +326,138 @@ const WineComponent = () => {
         <button onClick={downloadTemplate}>템플릿 다운로드</button><br/>
 
         <button onClick={handleExport}>엑셀로 내보내기</button><br/>
+
+        <div>
+            가로 사이즈 변경 : <br/>
+            여백 : <input type="number"
+                         value={widthColumns.space}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                space: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로0 : <input type="number"
+                         value={widthColumns.colums0}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums0: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로1 : <input type="number"
+                         value={widthColumns.colums1}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums1: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로2 : <input type="number"
+                         value={widthColumns.colums2}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums2: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로3 : <input type="number"
+                         value={widthColumns.colums3}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums3: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로4 : <input type="number"
+                         value={widthColumns.colums4}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums4: Number(e.target.value)
+                            })
+                         }}/><br/>
+            가로5 : <input type="number"
+                         value={widthColumns.colums5}
+                         onChange={(e)=>{
+                            setWidthColumns({...widthColumns,
+                                colums5: Number(e.target.value)
+                            })
+                         }}/><br/>
+        </div>
+
+        <div>
+            세로 사이즈 변경 : <br/>
+            세로0 : <input type="number"
+                         value={heightRows.row0}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row0: Number(e.target.value)
+                            })
+                         }}/><br/>
+
+            세로1 : <input type="number"
+                         value={heightRows.row1}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row1: Number(e.target.value)
+                            })
+                         }}/><br/>
+
+            세로2 : <input type="number"
+                         value={heightRows.row2}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row2: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로3 : <input type="number"
+                         value={heightRows.row3}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row3: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로4 : <input type="number"
+                         value={heightRows.row4}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row4: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로5 : <input type="number"
+                         value={heightRows.row5}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row5: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로6 : <input type="number"
+                         value={heightRows.row6}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row6: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로7 : <input type="number"
+                         value={heightRows.row7}
+                         onChange={(e)=>{
+                            setHeightRows({...heightRows,
+                                row7: Number(e.target.value)
+                            })
+                         }}/><br/>
+        </div>
+        <div>
+            국가 사이즈 변경 : <br/>
+            가로 : <input type="number"
+                         value={sizeFlag.width}
+                         onChange={(e)=>{
+                            setSizeFlag({...sizeFlag,
+                                width: Number(e.target.value)
+                            })
+                         }}/><br/>
+            세로 : <input type="number"
+                         value={sizeFlag.height}
+                         onChange={(e)=>{
+                            setSizeFlag({...sizeFlag,
+                                height: Number(e.target.value)
+                            })
+                         }}/><br/>
+        </div>
 
         <div>now wine datas : {datas.length}<br/>
         <strong>이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>

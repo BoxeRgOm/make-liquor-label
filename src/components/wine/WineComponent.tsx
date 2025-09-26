@@ -464,7 +464,7 @@ const WineComponent = () => {
         {datas.map((wine, index)=>{
              if(index > 0){
                 return (<div key={index}>
-                {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
+                {index}, {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
              }else{
                 return <></>
              }

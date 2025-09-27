@@ -460,11 +460,11 @@ const WineComponent = () => {
         </div>
 
         <div>now wine datas : {datas.length}<br/>
-        <strong>이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>
+        <strong>번호, 이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>
         {datas.map((wine, index)=>{
              if(index > 0){
                 return (<div key={index}>
-                {index}, {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
+                {index + 1}, {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
              }else{
                 return <></>
              }

@@ -306,7 +306,7 @@ const WineComponent = () => {
 
     const downloadTemplate = () => {
         const link = document.createElement("a");
-        link.href = process.env.PUBLIC_URL + "/xlsx/wine_label_template.xlsx";
+        link.href = process.env.PUBLIC_URL + "/xlsx/wine-label-template.xlsx";
         link.download = "wine_template.xlsx";
         link.click();
     };

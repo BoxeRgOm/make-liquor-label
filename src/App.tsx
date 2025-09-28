@@ -12,44 +12,44 @@ function App() {
 
   return (
     <div>
-      <>
-      
-      <button onClick={(e)=>{
-        e.preventDefault();
-        if (selectedType !== "wine"){
-          setSelectedType("wine")
-        }
-      }}>
-        {selectedType === "wine" && (<strong>Wine</strong>)}
-        {selectedType !== "wine" && (<>Wine</>)}
-      </button>{" "}
-      <button onClick={(e)=>{
-        e.preventDefault();
-        if (selectedType !== "whisky"){
-          setSelectedType("whisky")
-        }
-      }}>
-        {selectedType === "whisky" && (<strong>Whisky</strong>)}
-        {selectedType !== "whisky" && (<>Whisky</>)}
-      </button>{" "}
-      <button onClick={(e)=>{
-        e.preventDefault();
-        if (selectedType !== "etc"){
-          setSelectedType("etc")
-        }
-      }}>
-        {selectedType === "etc" && (<strong>ETC</strong>)}
-        {selectedType !== "etc" && (<>ETC</>)}
-      </button>{" "}
-      </>
-      
-      <br/>
-      
-      <div style={{
+
+      {/* <div>
+        <button onClick={(e) => {
+          e.preventDefault();
+          if (selectedType !== "wine") {
+            setSelectedType("wine")
+          }
         }}>
-        {selectedType === "wine" && (<WineComponent/>)}
-        {selectedType === "whisky" && (<WhiskyComponent/>)}
-        {selectedType === "etc" && (<EtcComponent/>)}
+          {selectedType === "wine" && (<strong>Wine</strong>)}
+          {selectedType !== "wine" && (<>Wine</>)}
+        </button>{" "}
+        <button onClick={(e) => {
+          e.preventDefault();
+          if (selectedType !== "whisky") {
+            setSelectedType("whisky")
+          }
+        }}>
+          {selectedType === "whisky" && (<strong>Whisky</strong>)}
+          {selectedType !== "whisky" && (<>Whisky</>)}
+        </button>{" "}
+        <button onClick={(e) => {
+          e.preventDefault();
+          if (selectedType !== "etc") {
+            setSelectedType("etc")
+          }
+        }}>
+          {selectedType === "etc" && (<strong>ETC</strong>)}
+          {selectedType !== "etc" && (<>ETC</>)}
+        </button>{" "}
+      </div> */}
+
+      <br />
+
+      <div style={{
+      }}>
+        {selectedType === "wine" && (<WineComponent />)}
+        {selectedType === "whisky" && (<WhiskyComponent />)}
+        {selectedType === "etc" && (<EtcComponent />)}
       </div>
 
     </div>

@@ -19,8 +19,8 @@ const WineComponent = () => {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [datas, setDatas] = useState<Array<Wine>>([])
+    const [openSizeForm] = useState(false)
 
-    
     const getWineBlockPosition = (index: number) => {
         const colStarts = [2, 9, 16, 23]; // B, I, P, W
         const blockWidth = 6;   // G-B+10
@@ -97,13 +97,13 @@ const WineComponent = () => {
     };
 
     const [widthColumns, setWidthColumns] = useState({
-        space : 2.2,
-        colums0 : 0.41,
-        colums1 : 14,
-        colums2 : 7,
-        colums3 : 7.5,
-        colums4 : 5,
-        colums5 : 0.41,
+        space: 2.2,
+        colums0: 0.74,
+        colums1: 14.8,
+        colums2: 7.8,
+        colums3: 8.3,
+        colums4: 5.7,
+        colums5: 0.74,
     })
 
     const [heightRows, setHeightRows] = useState({
@@ -118,8 +118,8 @@ const WineComponent = () => {
     })
 
     const [sizeFlag, setSizeFlag] = useState({
-         width: 42, height: 80 
-        })
+        width: 42, height: 80
+    })
 
     const handleExport = async () => {
 
@@ -166,12 +166,12 @@ const WineComponent = () => {
 
 
 
-        let flags: Array<{startRow: number, startCol: number, nation: string}> = []
+        let flags: Array<{ startRow: number, startCol: number, nation: string }> = []
 
         datas.forEach(async (wine, idx) => {
             const { startRow, endRow, startCol, endCol } = getWineBlockPosition(idx);
 
-            flags.push({startRow: startRow, startCol: startCol, nation: wine.nation})
+            flags.push({ startRow: startRow, startCol: startCol, nation: wine.nation })
 
             // 외곽 테두리
             for (let r = startRow; r <= endRow; r++) {
@@ -185,7 +185,7 @@ const WineComponent = () => {
                 }
             }
 
-            if (idx % 4 === 0){
+            if (idx % 4 === 0) {
 
                 sheet.getRow(startRow).height = heightRows.row0;
                 sheet.getRow(startRow + 1).height = heightRows.row1;
@@ -204,14 +204,20 @@ const WineComponent = () => {
             const nameCell = sheet.getCell(startRow + 1, startCol + 1);
             nameCell.value = wine.name;
             nameCell.alignment = { wrapText: true, horizontal: "left", vertical: "middle" };
-            nameCell.font = {bold: true, size: 19 };
+
+            if (wine.name.length > 8) {
+                nameCell.font = { size: 16 };
+            } else {
+                nameCell.font = { size: 19 };
+            }
+
 
             // 국가 > 지역
-            sheet.mergeCells(startRow + 2, startCol + 1, startRow + 2, startCol + 2);
+            sheet.mergeCells(startRow + 2, startCol + 1, startRow + 2, startCol + 3);
             const regionCell = sheet.getCell(startRow + 2, startCol + 1);
-            if (wine.region){
+            if (wine.region) {
                 regionCell.value = `${wine.nation} > ${wine.region}`;
-            }else{
+            } else {
                 regionCell.value = `${wine.nation}`;
             }
             regionCell.font = { size: 8 };
@@ -227,17 +233,18 @@ const WineComponent = () => {
             const volumeCell = sheet.getCell(startRow + 3, startCol + 4);
             volumeCell.value = `${wine.volume}ml`;
             volumeCell.font = { size: 8 };
+            volumeCell.alignment = { vertical: "middle", horizontal: "center" };
 
             // 정상가
             const normalPriceTitleCell = sheet.getCell(startRow + 5, startCol + 1);
             normalPriceTitleCell.value = "정상가";
             normalPriceTitleCell.font = { size: 8 };
-            normalPriceTitleCell.alignment = { vertical: "middle", horizontal: "center" };
+            normalPriceTitleCell.alignment = { vertical: "bottom", horizontal: "center" };
 
             const normalPriceCell = sheet.getCell(startRow + 6, startCol + 1);
 
             normalPriceCell.value = `${wine.normalPrice.toLocaleString()}원`;
-            normalPriceCell.font = { strike: true, size: 12, bold: true};
+            normalPriceCell.font = { strike: true, size: 12, bold: true };
             normalPriceCell.alignment = { vertical: "middle", horizontal: "center" };
 
             // nowPrice
@@ -250,33 +257,33 @@ const WineComponent = () => {
 
         });
 
-        for (let i = 0; i<flags.length; i++){
+        for (let i = 0; i < flags.length; i++) {
 
             const flag = flags[i]
 
             let fileName = ""
-            
-            if(flag.nation === '프랑스'){
+
+            if (flag.nation === '프랑스') {
                 fileName = "fr"
-            }else if(flag.nation === '이탈리아'){
+            } else if (flag.nation === '이탈리아') {
                 fileName = "it"
-            }else if(flag.nation === '독일'){
+            } else if (flag.nation === '독일') {
                 fileName = "dc"
-            }else if(flag.nation === '칠레'){
+            } else if (flag.nation === '칠레') {
                 fileName = "ch"
-            }else if(flag.nation === '호주'){
+            } else if (flag.nation === '호주') {
                 fileName = "aus"
-            }else if(flag.nation === '스페인'){
-                fileName = "dc"
-            }else if(flag.nation === '포르투갈'){
+            } else if (flag.nation === '스페인') {
+                fileName = "sp"
+            } else if (flag.nation === '포르투갈') {
                 fileName = "pg"
-            }else if(flag.nation === '미국'){
+            } else if (flag.nation === '미국') {
                 fileName = "us"
-            }else if(flag.nation === '뉴질랜드'){
+            } else if (flag.nation === '뉴질랜드') {
                 fileName = "nz"
-            }else if(flag.nation === '남아프리카공화국'){
+            } else if (flag.nation === '남아프리카공화국') {
                 fileName = "sa"
-            }else if(flag.nation === '아르헨티나'){
+            } else if (flag.nation === '아르헨티나') {
                 fileName = "ag"
             }
             const response = await fetch(process.env.PUBLIC_URL + `/imgs/${fileName}.png`);
@@ -291,12 +298,12 @@ const WineComponent = () => {
             })
 
             sheet.addImage(imageId, {
-                tl: { col: flags[i].startCol + 3, row: flags[i].startRow  },
+                tl: { col: flags[i].startCol + 3, row: flags[i].startRow },
                 ext: sizeFlag, // px 단위 크기 지정
                 editAs: "absolute"
             });
         }
-           
+
 
         // 엑셀 파일로 다운로드
         const buffer = await workbook.xlsx.writeBuffer();
@@ -312,163 +319,206 @@ const WineComponent = () => {
     };
 
     return <>
-        Wine 네익택 생성기 <br/>
-        <button onClick={()=>{
-            fileInputRef.current?.click();
-        }}>엑셀 업로드</button>
+        Wine 네익택 생성기 <br />
+        <div>
+            <button onClick={() => {
+                fileInputRef.current?.click();
+            }}>엑셀 업로드</button>
             <input type="file"
-                   accept=".xlsx,.xls"
-                   ref={fileInputRef}
-                   style={{ display: "none" }}
-                   onChange={handleImport}/>
-        <br/>
+                accept=".xlsx,.xls"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImport} />{" "}
 
-        <button onClick={downloadTemplate}>템플릿 다운로드</button><br/>
+            <button onClick={downloadTemplate}>템플릿 다운로드</button>{" "}
 
-        <button onClick={handleExport}>엑셀로 내보내기</button><br/>
+            <button onClick={handleExport}>엑셀로 내보내기</button><br />
+        </div>
+        {
+            openSizeForm && (
+                <>
+                    <div>
+                        가로 사이즈 변경 : <br />
+                        여백 : <input type="number"
+                            value={widthColumns.space}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    space: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로0 : <input type="number"
+                            value={widthColumns.colums0}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums0: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로1 : <input type="number"
+                            value={widthColumns.colums1}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums1: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로2 : <input type="number"
+                            value={widthColumns.colums2}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums2: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로3 : <input type="number"
+                            value={widthColumns.colums3}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums3: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로4 : <input type="number"
+                            value={widthColumns.colums4}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums4: Number(e.target.value)
+                                })
+                            }} /><br />
+                        가로5 : <input type="number"
+                            value={widthColumns.colums5}
+                            onChange={(e) => {
+                                setWidthColumns({
+                                    ...widthColumns,
+                                    colums5: Number(e.target.value)
+                                })
+                            }} /><br />
+                    </div>
+
+                    <div>
+                        세로 사이즈 변경 : <br />
+                        세로0 : <input type="number"
+                            value={heightRows.row0}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row0: Number(e.target.value)
+                                })
+                            }} /><br />
+
+                        세로1 : <input type="number"
+                            value={heightRows.row1}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row1: Number(e.target.value)
+                                })
+                            }} /><br />
+
+                        세로2 : <input type="number"
+                            value={heightRows.row2}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row2: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로3 : <input type="number"
+                            value={heightRows.row3}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row3: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로4 : <input type="number"
+                            value={heightRows.row4}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row4: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로5 : <input type="number"
+                            value={heightRows.row5}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row5: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로6 : <input type="number"
+                            value={heightRows.row6}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row6: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로7 : <input type="number"
+                            value={heightRows.row7}
+                            onChange={(e) => {
+                                setHeightRows({
+                                    ...heightRows,
+                                    row7: Number(e.target.value)
+                                })
+                            }} /><br />
+                    </div>
+                    <div>
+                        국가 사이즈 변경 : <br />
+                        가로 : <input type="number"
+                            value={sizeFlag.width}
+                            onChange={(e) => {
+                                setSizeFlag({
+                                    ...sizeFlag,
+                                    width: Number(e.target.value)
+                                })
+                            }} /><br />
+                        세로 : <input type="number"
+                            value={sizeFlag.height}
+                            onChange={(e) => {
+                                setSizeFlag({
+                                    ...sizeFlag,
+                                    height: Number(e.target.value)
+                                })
+                            }} /><br />
+                    </div>
+                </>
+            )
+        }
 
         <div>
-            가로 사이즈 변경 : <br/>
-            여백 : <input type="number"
-                         value={widthColumns.space}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                space: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로0 : <input type="number"
-                         value={widthColumns.colums0}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums0: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로1 : <input type="number"
-                         value={widthColumns.colums1}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums1: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로2 : <input type="number"
-                         value={widthColumns.colums2}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums2: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로3 : <input type="number"
-                         value={widthColumns.colums3}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums3: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로4 : <input type="number"
-                         value={widthColumns.colums4}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums4: Number(e.target.value)
-                            })
-                         }}/><br/>
-            가로5 : <input type="number"
-                         value={widthColumns.colums5}
-                         onChange={(e)=>{
-                            setWidthColumns({...widthColumns,
-                                colums5: Number(e.target.value)
-                            })
-                         }}/><br/>
-        </div>
+            <table style={{ textAlign: "center" }}>
 
-        <div>
-            세로 사이즈 변경 : <br/>
-            세로0 : <input type="number"
-                         value={heightRows.row0}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row0: Number(e.target.value)
-                            })
-                         }}/><br/>
-
-            세로1 : <input type="number"
-                         value={heightRows.row1}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row1: Number(e.target.value)
-                            })
-                         }}/><br/>
-
-            세로2 : <input type="number"
-                         value={heightRows.row2}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row2: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로3 : <input type="number"
-                         value={heightRows.row3}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row3: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로4 : <input type="number"
-                         value={heightRows.row4}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row4: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로5 : <input type="number"
-                         value={heightRows.row5}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row5: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로6 : <input type="number"
-                         value={heightRows.row6}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row6: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로7 : <input type="number"
-                         value={heightRows.row7}
-                         onChange={(e)=>{
-                            setHeightRows({...heightRows,
-                                row7: Number(e.target.value)
-                            })
-                         }}/><br/>
-        </div>
-        <div>
-            국가 사이즈 변경 : <br/>
-            가로 : <input type="number"
-                         value={sizeFlag.width}
-                         onChange={(e)=>{
-                            setSizeFlag({...sizeFlag,
-                                width: Number(e.target.value)
-                            })
-                         }}/><br/>
-            세로 : <input type="number"
-                         value={sizeFlag.height}
-                         onChange={(e)=>{
-                            setSizeFlag({...sizeFlag,
-                                height: Number(e.target.value)
-                            })
-                         }}/><br/>
-        </div>
-
-        <div>now wine datas : {datas.length}<br/>
-        <strong>번호, 이름, 국가, 지역, 품종, 용량, 정상가(원), 판매가(원)</strong><br/>
-        {datas.map((wine, index)=>{
-             if(index > 0){
-                return (<div key={index}>
-                {index + 1}, {wine.name}, {wine.nation}, {wine.region}, {wine.category}, {wine.volume}, {wine.normalPrice}, {wine.nowPrice}</div>)
-             }else{
-                return <></>
-             }
-        })}
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>국가</th>
+                        <th>지역</th>
+                        <th>품종</th>
+                        <th>용량</th>
+                        <th>정상가(원)</th>
+                        <th>판매가(원)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {datas.map((wine, index) => (
+                        <tr key={index}>
+                            <td >{index + 1}</td>
+                            <td >{wine.name}</td>
+                            <td >{wine.nation}</td>
+                            <td >{wine.region}</td>
+                            <td >{wine.category}</td>
+                            <td >{wine.volume} ml</td>
+                            <td >{wine.normalPrice} 원</td>
+                            <td >{wine.nowPrice} 원</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     </>
 }

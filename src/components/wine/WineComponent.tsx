@@ -210,6 +210,7 @@ const WineComponent = () => {
             } else {
                 nameCell.font = { size: 19 };
             }
+            nameCell.font.name = "NanumSquareNeoOTF-Hv"
 
 
             // 국가 > 지역
@@ -221,6 +222,7 @@ const WineComponent = () => {
                 regionCell.value = `${wine.nation}`;
             }
             regionCell.font = { size: 8 };
+            regionCell.font.name = "NanumSquareNeoOTF-Hv"
 
 
             // category
@@ -228,24 +230,28 @@ const WineComponent = () => {
             const categoryCell = sheet.getCell(startRow + 3, startCol + 1);
             categoryCell.value = wine.category;
             categoryCell.font = { size: 8 };
+            categoryCell.font.name = "NanumSquareNeoOTF-Bd"
 
             // volume
             const volumeCell = sheet.getCell(startRow + 3, startCol + 4);
             volumeCell.value = `${wine.volume}ml`;
             volumeCell.font = { size: 8 };
             volumeCell.alignment = { vertical: "middle", horizontal: "center" };
+            volumeCell.font.name = "NanumSquareNeoOTF-Bd"
 
             // 정상가
             const normalPriceTitleCell = sheet.getCell(startRow + 5, startCol + 1);
             normalPriceTitleCell.value = "정상가";
             normalPriceTitleCell.font = { size: 8 };
             normalPriceTitleCell.alignment = { vertical: "bottom", horizontal: "center" };
+            normalPriceTitleCell.font.name = "NanumSquareRoundOTFEB-Bd"
 
             const normalPriceCell = sheet.getCell(startRow + 6, startCol + 1);
 
             normalPriceCell.value = `${wine.normalPrice.toLocaleString()}원`;
             normalPriceCell.font = { strike: true, size: 12, bold: true };
             normalPriceCell.alignment = { vertical: "middle", horizontal: "center" };
+            normalPriceCell.font.name = "NanumSquareNeoOTF-Bd"
 
             // nowPrice
             sheet.mergeCells(startRow + 5, startCol + 2, startRow + 6, startCol + 4);
@@ -254,6 +260,7 @@ const WineComponent = () => {
             nowPriceCell.value = `${wine.nowPrice.toLocaleString()}원`;
             nowPriceCell.alignment = { vertical: "middle", horizontal: "center" };
             nowPriceCell.font = { bold: true, size: 18, color: { argb: "FF0000" } };
+            nowPriceCell.font.name = "NanumSquareNeoOTF-Hv"
 
         });
 

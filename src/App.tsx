@@ -4,7 +4,6 @@ import WineComponent from "./components/wine/WineComponent"
 import WhiskyComponent from "./components/whisky/WhiskyComponent"
 import EtcComponent from './components/etc/EtcComponent';
 
-
 function App() {
 
 
